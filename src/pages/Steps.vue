@@ -30,9 +30,9 @@
         <div class="row">
          
 
-         <table class="table">
+            <table class="table">
   <thead>
-    <tr>
+    <tr class="table-info">
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
@@ -41,16 +41,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr >
       <th scope="row">1</th>
       <td>Step 1</td>
       <td>Desc 1</td>
      
       <td>
-          <router-link to="/editStep">
-        <button type="button" class="btn btn-warning">EDIT</button>
+        <router-link to='/editIng'>
+           <n-button   type="warning" link>EDIT</n-button>
           </router-link>
-         <button type="button" class="btn btn-danger">DELETE</button>
+          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
       </td>
     </tr>
     <tr>
@@ -59,17 +59,17 @@
       <td>Desc 2</td>
     
       <td>
-          <router-link to="/editStep">
-          <button type="button" class="btn btn-warning">EDIT</button>
+          <router-link to='/editIng'>
+           <n-button   type="warning" link>EDIT</n-button>
           </router-link>
-         <button type="button" class="btn btn-danger">DELETE</button>
+          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
       </td>
     </tr>
     
   </tbody>
 </table>
 <router-link to="/addStep">
-<button type="button" class="btn btn-info">Add</button>
+<n-button type="info" link>ADD</n-button>
 </router-link>
   
         </div>
@@ -86,6 +86,20 @@ export default {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
   },
+  methods: {
+    validation: function(event) {
+       if(confirm("Do you really want to validate?")){
+
+                alert('Validated!');
+   }
+    },
+    del: function(event) {
+       if(confirm("Do you really want to delete?")){
+
+                alert('Deleted!');
+   }
+    },
+  }
   
 };
 

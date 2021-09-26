@@ -28,36 +28,42 @@
         <h2 class="title">Edit a FreezBe Model </h2>
        
        
-         <form>
+         <form @submit.prevent="submit">
              
-            
+             <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorG }}</p>
           <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="Name"
+              v-model="form.name"
             >
             </fg-input>
-             
+              <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorD }}</p>
             <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="Description"
+              v-model="form.desc"
             >
             </fg-input>
             <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="pUHT"
+              v-model="form.puht"
               type="number"
             >
             </fg-input>
             <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="Range"
+              v-model="form.range"
             >
             </fg-input>
             <div class="container">
-             <div class="row">
-           
-             </div>
-             <n-button type="primary" link>EDIT</n-button>
+             
+             <n-button v-on:click="submit" type="primary" link>EDIT</n-button>
     </div>
 
          </form>
@@ -68,7 +74,7 @@
   </div>
 </template>
 <script>
-import { Button, FormGroupInput,Checkbox } from '@/components';
+import { Button, FormGroupInput } from '@/components';
 
 export default {
   name: 'EditModel',
@@ -76,17 +82,46 @@ export default {
   components: {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput,
-    [Checkbox.name]:Checkbox,
+    
     
   },
   data () {
         return {
-          unchecked: false,
-          checked: true,
-          unchecked1: false,
-          checked1: true
+          form:{
+            name:'',
+            desc:'',
+            puht:'',
+            range:'',
+            errorG: '',
+            errorD: '',
+           
+          }
         }
+      },
+    
+  methods:{
+    async submit(){
+      if(!this.form.name || !this.form.desc || !this.form.puht || !this.form.range){
+        this.form.errorD=""
+        this.form.errorG="Please fill all fildes"
+        
       }
+     else if(this.form.desc.length <=8 || this.form.desc.length >250){
+        
+        this.form.errorD="Description must contain minimum 8 characters and maximum 250 characters"
+        this.form.errorG=""
+      }
+      else{
+        this.form.errorG="Succ"
+        this.form.errorD=""
+
+      //let response  = axios.post('editModel',this.form);
+      //console.log(response);
+      
+      }
+    }
+
+  }
 };
 
 </script>

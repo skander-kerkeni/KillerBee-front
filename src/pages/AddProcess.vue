@@ -27,13 +27,15 @@
       <div class="container">
         <h2 class="title">Add a manufacturing process </h2>
        
-       
-         <form>
-             
+        <form @submit.prevent="submit">
+            <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorG }}</p>
             
           <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="Name"
+               v-model="form.name"
             >
             </fg-input>
 
@@ -41,11 +43,14 @@
 <div class="col-6" style="
     margin-left: 24%;
 ">
-<select class="form-control ">
-  <option>Choose Your Model</option>
-  <option> Model1</option>
-  <option> Model2</option>
-  <option> Model3</option>
+ <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorM }}</p>
+<select class="form-control "  v-model="form.model">
+  <option value="">Choose Your Model</option>
+  <option value="Model1"> Model1</option>
+  <option value="Model2"> Model2</option>
+  <option value="Model3"> Model3</option>
 </select>
 
 </div>
@@ -54,10 +59,14 @@
 ">
 
 </div>
-
+  <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorD }}</p>
             <fg-input
               addon-left-icon="now-ui-icons text_caps-small"
               placeholder="Description"
+              v-model="form.desc"
+              
             >
             </fg-input>
             <div class="container">
@@ -66,38 +75,38 @@
                  <a> Steps:</a>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked1">Step1</n-checkbox>
+                 <n-checkbox >Step1</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step2</n-checkbox>
+                 <n-checkbox >Step2</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step3</n-checkbox>
+                 <n-checkbox >Step3</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step4</n-checkbox>
+                 <n-checkbox >Step4</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step5</n-checkbox>
+                 <n-checkbox >Step5</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step6</n-checkbox>
+                 <n-checkbox >Step6</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step7</n-checkbox>
+                 <n-checkbox>Step7</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step8</n-checkbox>
+                 <n-checkbox>Step8</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step9</n-checkbox>
+                 <n-checkbox>Step9</n-checkbox>
                  </div>
                  <div class="col col-lg-2">
-                 <n-checkbox v-model="unchecked">Step10</n-checkbox>
+                 <n-checkbox >Step10</n-checkbox>
                  </div>
 
              </div>
-             <n-button type="primary" link>ADD</n-button>
+             <n-button v-on:click="submit" type="primary" link>ADD</n-button>
     </div>
 
          </form>
@@ -121,14 +130,50 @@ export default {
     [DropDown.name]:DropDown
     
   },
-  data () {
+data () {
         return {
-          unchecked: false,
-          checked: true,
-          unchecked1: false,
-          checked1: true
+          form:{
+            name:'',
+            desc:'',
+            model:'',
+            errorM: '',
+            errorG: '',
+            errorD: '',
+           
+          }
         }
+      },
+    
+  methods:{
+    async submit(){
+      if(!this.form.name || !this.form.desc ){
+        this.form.errorD=""
+        this.form.errorM=""
+        this.form.errorG="Please fill all fildes"
+        
       }
+     else if(this.form.model==""){
+        this.form.errorM="Please choose a model"
+        this.form.errorD=""
+        this.form.errorG=""
+      } else if(this.form.desc.length <=8 || this.form.desc.length >250){
+        this.form.errorM=""
+        this.form.errorD="Description must contain minimum 8 characters and maximum 250 characters"
+        this.form.errorG=""
+        
+      }
+      else{
+        this.form.errorG="Succ"
+        this.form.errorD=""
+        this.form.errorM=""
+
+      //let response  = axios.post('editModel',this.form);
+      //console.log(response);
+      
+      }
+    }
+
+  }
 };
 
 </script>

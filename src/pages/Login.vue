@@ -12,7 +12,17 @@
               <img v-lazy="'img/freezbe.png'" alt="" />
             </div>
            
-      <form @submit.prevent="submit">      
+      <form @submit.prevent="submit"
+    
+      >    
+      
+    
+    
+  <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorU }}</p>
+        
+          
             <fg-input
             v-model="form.username"
             name="username"
@@ -20,9 +30,13 @@
               class="no-border input-lg"
               addon-left-icon="now-ui-icons users_circle-08"
               placeholder="Username..."
+              
+              required:true
             >
             </fg-input>
-
+ <p class="text-danger" style="
+    font-size: 13px;
+">{{ form.errorP }}</p>
             <fg-input
             v-model="form.password"
             name="password"
@@ -71,20 +85,42 @@ export default {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
   },
-
-
   data () {
         return {
           form:{
             username:'',
-            password:''
+            password:'',
+            errorU: '',
+            errorP: ''
           }
         }
       },
+    
   methods:{
     async submit(){
-      let response  = axios.post('login',this.form);
-      console.log(response);
+      if(!this.form.username && !this.form.password){
+        
+        this.form.errorU="Please enter your username and password"
+        this.form.errorP=""
+      }
+     else if(!this.form.username){
+        
+        this.form.errorU="Please enter your username"
+        this.form.errorP=""
+      }
+     else  if(!this.form.password){
+        this.form.errorU=""
+        this.form.errorP="Please enter your password"
+        
+      }
+      else{
+        this.form.errorU=""
+        this.form.errorP=""
+
+      //let response  = axios.post('login',this.form);
+      //console.log(response);
+      
+      }
     }
 
   }
