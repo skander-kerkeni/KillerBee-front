@@ -24,15 +24,16 @@
         
           
             <fg-input
-            v-model="form.username"
-            name="username"
-            id="username"
+            v-model="form.email"
+            name="email"
+            id="email"
               class="no-border input-lg"
               addon-left-icon="now-ui-icons users_circle-08"
-              placeholder="Username..."
+              placeholder="Email..."
               
-              required:true
+             
             >
+            
             </fg-input>
  <p class="text-danger" style="
     font-size: 13px;
@@ -69,26 +70,27 @@
         </div>
       </div>
     </div>
-    <main-footer></main-footer>
+    <main-footerL></main-footerL>
   </div>
 </template>
 <script>
 import { Card, Button, FormGroupInput } from '@/components';
-import MainFooter from '@/layout/MainFooter';
-import axios from 'axios'
+
+import MainFooterL from '@/layout/MainFooterL';
+import {Axios} from '../axios';
 export default {
   name: 'login-page',
   bodyClass: 'login-page',
   components: {
     Card,
-    MainFooter,
+    MainFooterL,
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
   },
   data () {
         return {
           form:{
-            username:'',
+            email:'',
             password:'',
             errorU: '',
             errorP: ''
@@ -98,14 +100,14 @@ export default {
     
   methods:{
     async submit(){
-      if(!this.form.username && !this.form.password){
+      if(!this.form.email && !this.form.password){
         
-        this.form.errorU="Please enter your username and password"
+        this.form.errorU="Please enter your email and password"
         this.form.errorP=""
       }
-     else if(!this.form.username){
+     else if(!this.form.email){
         
-        this.form.errorU="Please enter your username"
+        this.form.errorU="Please enter your email"
         this.form.errorP=""
       }
      else  if(!this.form.password){
@@ -117,8 +119,27 @@ export default {
         this.form.errorU=""
         this.form.errorP=""
 
-      //let response  = axios.post('login',this.form);
-      //console.log(response);
+    Axios.post('/login/auth', {
+  email: this.form.email,
+  password: this.form.password,
+ 
+  
+})
+.then((response) => {
+    if (response.data=="identifiant ou mot de passe incorrect")
+    this.form.errorU="Wrong informations!"
+  else{
+   
+      window.localStorage.setItem('user-token', response.data.api_token)
+     
+      this.$router.push('../home')
+  }
+   
+}, (error) => {
+ 
+  console.log(error);
+});
+     
       
       }
     }

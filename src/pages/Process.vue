@@ -43,59 +43,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Process 1</td>
-       <td>Model 15</td>
-      <td>Desc 1</td>
+    <tr v-for="(item,index) in info" :key="item.id">
+      <th scope="row">{{index}}</th>
+      <td>{{item['pro_nom']}}</td>
+       <td>{{item['id_procede']}}</td>
+      <td>{{item['pro_description']}}</td>
      <td>Step1 , Step5 , Step6</td>
       <td>Validated</td>
       <td>
          
-                    <n-button  v-on:click="validation" type="success" link>VALIDATE</n-button>
+                    <n-button  v-on:click="validation(item['id'])" type="success" link>VALIDATE</n-button>
 
-          <router-link to='/editProcess'>
+          <router-link v-bind:to="'/editProcess/'+item['id']" >
         <n-button   type="warning" link>EDIT</n-button>
           </router-link>
-         <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
+         <n-button  v-on:click="del(item['id'])" type="danger" link>DELETE</n-button>
       </td>
     </tr>
-    <tr class="table-danger">
-      <th scope="row">2</th>
-      <td>Process 2</td>
-      <td>Model 2</td>
-      <td>Desc 2</td>
-    <td>Step1 , Step8 , Step11</td>
-    <td>Not Validated</td>
-      <td>
-          
-
-          
-          <n-button  v-on:click="validation" type="success" link>VALIDATE</n-button>
-          <router-link to='/editProcess'>
-           <n-button   type="warning" link>EDIT</n-button>
-          </router-link>
-          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
-         
-      </td>
-    </tr>
-      <tr>
-      <th scope="row">1</th>
-      <td>Process 3</td>
-       <td>Model 7</td>
-      <td>Desc 3</td>
-     <td>Step1 , Step5 , Step6</td>
-      <td>Validated</td>
-      <td>
-         
-                    <n-button  v-on:click="validation" type="success" link>VALIDATE</n-button>
-
-          <router-link to='/editProcess'>
-        <n-button   type="warning" link>EDIT</n-button>
-          </router-link>
-         <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
-      </td>
-    </tr>
+   
+      
     
   </tbody>
 </table>
@@ -115,12 +81,23 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
+import axios from 'axios';
 export default {
   name: 'Process',
   bodyClass: 'landing-page',
   components: {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
+  },
+   data () {
+    return {
+      info: null
+    }
+  },
+  mounted () {
+    axios
+      .get('http://localhost:8000/Procede')
+      .then(response => (this.info = response.data))
   },
   methods: {
     validation: function(event) {
@@ -129,13 +106,18 @@ export default {
                 alert('Validated!');
    }
     },
-    del: function(event) {
+    del(x) {
        if(confirm("Do you really want to delete?")){
-
-                alert('Deleted!');
+         axios
+      .delete('http://localhost:8000/Procede/delete/'+x)
+      .then(response => (
+       this.$router.push('../process'),
+      alert("Deleted")))
+                
    }
     },
   }
+
   
 };
 

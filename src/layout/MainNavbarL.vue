@@ -7,9 +7,7 @@
     menu-classes="ml-auto"
   >
     <template>
-      <router-link v-popover:popover1 class="navbar-brand" to="/home">
-        FreezBe
-      </router-link>
+      
       <el-popover
         ref="popover1"
         popper-class="popover"
@@ -22,30 +20,6 @@
     </template>
     <template slot="navbar-menu">
       
-      
-      <drop-down
-              tag="li"
-              title="FreezBe"
-              icon="now-ui-icons design_image"
-              class="nav-item"
-      >
-      <nav-link to="/profile">
-          <i class="now-ui-icons users_single-02"></i> Profile
-        </nav-link>
-        <nav-link to="/models">
-          <i class="now-ui-icons education_paper"></i> Models
-        </nav-link>
-        <nav-link to="/ingredients">
-          <i class="now-ui-icons education_paper"></i> Ingredients
-        </nav-link>
-        <nav-link to="/process">
-          <i class="now-ui-icons education_paper"></i> Manufacturing process
-        </nav-link>
-        <nav-link>
-          <i  class="now-ui-icons users_circle-08" ></i> <a @click="logout" style="color: black"> Logout</a>
-        </nav-link>
-        
-      </drop-down>
      
 
       <li class="nav-item">
@@ -94,9 +68,9 @@
 </template>
 
 <script>
-import { DropDown, Navbar, NavLink } from '@/components';
+import { Navbar } from '@/components';
 import { Popover } from 'element-ui';
-import {logOut} from '../action/auth';
+
 
 export default {
   name: 'main-navbar',
@@ -105,20 +79,12 @@ export default {
     colorOnScroll: Number
   },
   components: {
-    DropDown,
+   
     Navbar,
-    NavLink,
+    
    
     [Popover.name]: Popover
-  },
-   methods: {
-    
-    logout() {
-      console.log("sdsd"),
-      logOut();  
-    }
   }
-  
 };
 </script>
 

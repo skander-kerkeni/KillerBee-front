@@ -42,32 +42,23 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Model 1</td>
-      <td>Desc 1</td>
-      <td>15</td>
-      <td>Range1</td>
+ 
+    <tr v-for="(item,index) in info" :key="item.id">
+         
+      <th scope="row">{{index}}</th>
+      <td>{{item['Nom']}}</td>
+      <td>{{item['Description']}}</td>
+      <td>{{item['pUHT']}}</td>
+      <td>{{item['Gamme']}}</td>
       <td>
-        <router-link to='/editModel'>
+        <router-link v-bind:to="'/editModel/'+item['id']"  >
            <n-button   type="warning" link>EDIT</n-button>
           </router-link>
-          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
+          <n-button  v-on:click="del(item['id'])" type="danger" link>DELETE</n-button>
       </td>
+     
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Model 2</td>
-      <td>Desc 2</td>
-      <td>15</td>
-      <td>Range2</td>
-      <td>
-        <router-link to='/editModel'>
-           <n-button   type="warning" link>EDIT</n-button>
-          </router-link>
-          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
-      </td>
-    </tr>
+    
     
   </tbody>
 </table>
@@ -76,6 +67,7 @@
  <n-button type="info" link>ADD</n-button>
 
 </router-link>
+
   
         </div>
       </div>
@@ -84,6 +76,8 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
+
+import {Axios} from '../axios';
 export default {
   name: 'Models',
   bodyClass: 'landing-page',
@@ -91,6 +85,30 @@ export default {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
   },
+  data () {
+    return {
+      info: null
+    }
+  },
+
+  mounted () {
+    Axios
+      .get('/Modele')
+      .then(response => (this.info = response.data))
+  },
+  methods: {
+    
+    del(x) {
+       if(confirm("Do you really want to delete?")){
+         Axios
+      .delete('/Modele/delete/'+x)
+      .then(response => (
+      alert("Deleted")),
+       this.$router.push('../models'))
+                
+   }
+    },
+  }
   
 };
 

@@ -63,6 +63,7 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
+import {Axios} from '../axios'
 
 export default {
   name: 'AddIng',
@@ -99,11 +100,17 @@ export default {
         this.form.errorG=""
       }
       else{
-        this.form.errorG="Succ"
+        this.form.errorG=""
         this.form.errorD=""
-
-      //let response  = axios.post('editModel',this.form);
-      //console.log(response);
+Axios.post('/ingredient/create', {
+  ing_nom: this.form.name,
+  ing_dscription: this.form.desc,
+})
+.then((response) => {
+   this.$router.push('../ing')
+}, (error) => {
+  console.log(error);
+});
       
       }
     }

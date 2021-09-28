@@ -7,7 +7,9 @@ import Login from './pages/Login.vue';
 import Profile from './pages/Profile.vue';
 import Models from './pages/Models.vue';
 import MainNavbar from './layout/MainNavbar.vue';
+import MainNavbarL from './layout/MainNavbarL.vue';
 import MainFooter from './layout/MainFooter.vue';
+import MainFooterL from './layout/MainFooterL.vue';
 import Contact from './pages/Contact.vue';
 import About from './pages/About.vue';
 import Steps from './pages/Steps.vue';
@@ -46,7 +48,7 @@ export default new Router({
       }
     },
      {
-      path: '/editModel',
+      path: '/editModel/:id',
       name: 'editModel',
       components: { default: EditModel, header: MainNavbar, footer: MainFooter },
       props: {
@@ -64,7 +66,7 @@ export default new Router({
       }
     },
     {
-      path: '/editIng',
+      path: '/editIng/:id',
       name: 'editIng',
       components: { default: EditIng, header: MainNavbar, footer: MainFooter },
       props: {
@@ -100,7 +102,7 @@ export default new Router({
       }
     },
     {
-      path: '/editStep',
+      path: '/editStep/:id',
       name: 'editStep',
       components: { default: EditStep, header: MainNavbar, footer: MainFooter },
       props: {
@@ -109,7 +111,7 @@ export default new Router({
       }
     },
     {
-      path: '/editProcess',
+      path: '/editProcess/:id',
       name: 'editProcess',
       components: { default: EditProcess, header: MainNavbar, footer: MainFooter },
       props: {
@@ -138,7 +140,7 @@ export default new Router({
     {
       path: '/',
       name: 'login',
-      components: { default: Login, header: MainNavbar },
+      components: { default: Login, header: MainNavbarL, footer: MainFooterL  },
       props: {
         header: { colorOnScroll: 400 }
       }

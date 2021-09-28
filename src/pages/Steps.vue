@@ -41,30 +41,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr >
-      <th scope="row">1</th>
-      <td>Step 1</td>
-      <td>Desc 1</td>
+    <tr  v-for="(item,index) in info" :key="item.id">
+      <th scope="row">{{index}}</th>
+      <td>{{item['etap_nom']}}</td>
+      <td>{{item['etap_description']}}</td>
      
       <td>
-        <router-link to='/editIng'>
+        <router-link v-bind:to="'/editStep/'+item['id']"  >
            <n-button   type="warning" link>EDIT</n-button>
           </router-link>
-          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
+          <n-button  v-on:click="del(item['id'])" type="danger" link>DELETE</n-button>
       </td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Step 2</td>
-      <td>Desc 2</td>
     
-      <td>
-          <router-link to='/editIng'>
-           <n-button   type="warning" link>EDIT</n-button>
-          </router-link>
-          <n-button  v-on:click="del" type="danger" link>DELETE</n-button>
-      </td>
-    </tr>
     
   </tbody>
 </table>
@@ -79,6 +68,7 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
+import axios from 'axios';
 export default {
   name: 'Steps',
   bodyClass: 'landing-page',
@@ -86,17 +76,27 @@ export default {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
   },
+  data () {
+    return {
+      info: null
+    }
+  },
+
+  mounted () {
+    axios
+      .get('http://localhost:8000/Etapes')
+      .then(response => (this.info = response.data))
+  },
   methods: {
-    validation: function(event) {
-       if(confirm("Do you really want to validate?")){
-
-                alert('Validated!');
-   }
-    },
-    del: function(event) {
+    
+    del(x) {
        if(confirm("Do you really want to delete?")){
-
-                alert('Deleted!');
+         axios
+      .delete('http://localhost:8000/Etapes/delete/'+x)
+      .then(response => (
+       this.$router.push('../steps'),
+      alert("Deleted")))
+                
    }
     },
   }
