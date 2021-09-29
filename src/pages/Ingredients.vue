@@ -69,6 +69,7 @@
 <script>
 import { Button, FormGroupInput } from '@/components';
 import {Axios} from '../axios'
+import router from "@/router";
 export default {
   name: 'Ingredients',
   bodyClass: 'landing-page',
@@ -78,11 +79,16 @@ export default {
   },
   data () {
     return {
+      
+      token: window.localStorage.getItem("user-token") ,
       info: null
     }
   },
 
   mounted () {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
     Axios
       .get('/Ingredient')
       .then(response => (
@@ -96,8 +102,8 @@ export default {
          Axios
       .delete('/Ingredient/delete/'+x)
       .then(response => (
-      alert("Deleted")),
-       this.$router.push('../ing'))
+      this.$router.go()	)
+      )
                 
    }
     },

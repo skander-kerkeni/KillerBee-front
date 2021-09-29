@@ -1,4 +1,5 @@
 <template>
+
   <div class="page-header clear-filter" filter-color="orange">
     <div
       class="page-header-image"
@@ -89,6 +90,7 @@ export default {
   },
   data () {
         return {
+          
           form:{
             email:'',
             password:'',

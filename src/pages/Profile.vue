@@ -10,7 +10,7 @@
         <div class="photo-container">
           <img src="img/user.jpg" alt="" />
         </div>
-        <h3 class="title">User1</h3>
+        <h3 class="title">Freezbe-User</h3>
         <p class="category">Administrator</p>
       
       </div>
@@ -27,7 +27,7 @@
       <div class="row">
         <card class="card-signup" header-classes="text-center" color="orange">
           <template slot="header">
-            <h3 class="card-title title-up">User 1</h3>
+            <h3 class="card-title title-up">Administrator</h3>
             
             
           <form  @submit.prevent="submit">
@@ -36,9 +36,9 @@
 ">{{ form.errorU }}</p>
             <fg-input
               class="no-border"
-              placeholder="Username..."
+              
               addon-left-icon="now-ui-icons users_circle-08"
-               v-model="form.username"
+               v-model="form.email"
             >
             </fg-input>
 <p  style="
@@ -78,8 +78,10 @@
   </div>
 </template>
 <script>
-//import { Tabs, TabPane } from '@/components';
+
 import { Card, FormGroupInput, Button } from '@/components';
+import router from "@/router";
+import {Axios} from "../axios"
 export default {
   name: 'profile',
   bodyClass: 'profile-page',
@@ -90,8 +92,9 @@ export default {
   },
   data () {
         return {
+          token: window.localStorage.getItem("user-token") ,
           form:{
-            username:'',
+            email:'',
             password:'',
             passwordV:'',
             errorU: '',
@@ -99,17 +102,35 @@ export default {
           }
         }
       },
+       created() {
+    Axios.get("/login/auth/1" ).then(
+      (response) => (
+        (this.info = response.data),
+        (this.form.email = this.info["email"])
+      )
+    );
+  },
     
+ mounted() {
+   
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
+  },
   methods:{
     async submit(){
-      if(!this.form.username && !this.form.password){
+      if(!this.form.email && !this.form.password){
         
-        this.form.errorU="Please enter your username and password"
+        this.form.errorU="Please enter your email and password"
         this.form.errorP=""
       }
-     else if(!this.form.username){
+     else if(!this.form.email){
         
-        this.form.errorU="Please enter your username"
+        this.form.errorU="Please enter your email"
+        this.form.errorP=""
+      } else if(!this.form.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+        
+        this.form.errorU="Please enter valid email"
         this.form.errorP=""
       }else if(!this.form.password){
         this.form.errorU=""
@@ -128,9 +149,21 @@ export default {
       else{
         this.form.errorU=""
         this.form.errorP=""
-
-      //let response  = axios.post('login',this.form);
-      //console.log(response);
+         Axios.put("login/auth/update/1" , {
+          api_token: this.token,
+          email: this.form.email,
+          password: this.form.password,
+          
+        }).then(
+          (response) => {
+            console.log(response);
+            this.$router.push("../profile");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+     
       
       }
     }

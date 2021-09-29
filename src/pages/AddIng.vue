@@ -64,7 +64,7 @@
 <script>
 import { Button, FormGroupInput } from '@/components';
 import {Axios} from '../axios'
-
+import router from "@/router";
 export default {
   name: 'AddIng',
   bodyClass: 'landing-page',
@@ -76,6 +76,7 @@ export default {
   },
  data () {
         return {
+          token: window.localStorage.getItem("user-token"),
           form:{
             name:'',
             desc:'',
@@ -86,6 +87,13 @@ export default {
           }
         }
       },
+      
+  mounted() {
+    console.log(this.token);
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
+  },
     
   methods:{
     async submit(){
@@ -102,12 +110,12 @@ export default {
       else{
         this.form.errorG=""
         this.form.errorD=""
-Axios.post('/ingredient/create', {
+Axios.post('/Ingredient/create', {
   ing_nom: this.form.name,
-  ing_dscription: this.form.desc,
+  ing_description: this.form.desc,
 })
 .then((response) => {
-   this.$router.push('../ing')
+   this.$router.push("../ingredients");
 }, (error) => {
   console.log(error);
 });

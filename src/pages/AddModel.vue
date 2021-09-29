@@ -56,6 +56,7 @@
 <script>
 import { Button, FormGroupInput } from "@/components";
 import { Axios } from "../axios";
+import router from "@/router";
 export default {
   name: "AddModel",
   bodyClass: "landing-page",
@@ -65,6 +66,7 @@ export default {
   },
   data() {
     return {
+      token: window.localStorage.getItem("user-token") ,
       form: {
         name: "",
         desc: "",
@@ -75,7 +77,11 @@ export default {
       },
     };
   },
-
+ mounted() {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
+  },
   methods: {
     async submit() {
       if (
@@ -92,6 +98,7 @@ export default {
         this.form.errorG = "";
       } else {
         Axios.post("/Modele/create", {
+          api_token: this.token,
           Nom: this.form.name,
           Description: this.form.desc,
           pUHT: this.form.puht,

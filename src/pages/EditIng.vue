@@ -44,6 +44,7 @@
 <script>
 import { Button, FormGroupInput } from "@/components";
 import { Axios } from "../axios";
+import router from "@/router";
 export default {
   name: "EditIng",
   bodyClass: "landing-page",
@@ -55,6 +56,7 @@ export default {
     return {
       id: this.$route.params.id,
       info: null,
+      token: window.localStorage.getItem("user-token") ,
       form: {
         name: "",
         desc: "",
@@ -65,6 +67,9 @@ export default {
     };
   },
   created() {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
     Axios.get("/Ingredient/" + this.id).then(
       (response) => (
         (this.info = response.data),
@@ -92,7 +97,7 @@ export default {
         }).then(
           (response) => {
             console.log(response);
-            this.$router.push("../ing");
+            this.$router.push("../ingredients");
           },
           (error) => {
             console.log(error);

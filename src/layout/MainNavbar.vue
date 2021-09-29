@@ -32,7 +32,7 @@
       <nav-link to="/profile">
           <i class="now-ui-icons users_single-02"></i> Profile
         </nav-link>
-        <nav-link to="/models">
+        <nav-link v-bind:to="'/models'">
           <i class="now-ui-icons education_paper"></i> Models
         </nav-link>
         <nav-link to="/ingredients">
@@ -97,6 +97,7 @@
 import { DropDown, Navbar, NavLink } from '@/components';
 import { Popover } from 'element-ui';
 import {logOut} from '../action/auth';
+import router from "@/router";
 
 export default {
   name: 'main-navbar',
@@ -117,7 +118,18 @@ export default {
       console.log("sdsd"),
       logOut();  
     }
+  },
+  data() {
+    return {
+      token: window.localStorage.getItem("user-token") ,
+    };
   }
+  , mounted() {
+   
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
+  },
   
 };
 </script>

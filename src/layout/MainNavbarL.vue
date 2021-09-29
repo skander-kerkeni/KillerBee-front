@@ -20,7 +20,7 @@
     </template>
     <template slot="navbar-menu">
       
-     
+     <h1>{{token }}</h1>
 
       <li class="nav-item">
         <a
@@ -48,6 +48,8 @@
           <p class="d-lg-none d-xl-none">Facebook</p>
         </a>
       </li>
+     
+
       <li class="nav-item">
         <a
           class="nav-link"

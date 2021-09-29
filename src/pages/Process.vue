@@ -82,6 +82,7 @@
 <script>
 import { Button, FormGroupInput } from '@/components';
 import axios from 'axios';
+import router from "@/router";
 export default {
   name: 'Process',
   bodyClass: 'landing-page',
@@ -91,10 +92,15 @@ export default {
   },
    data () {
     return {
+            token: window.localStorage.getItem("user-token") ,
+
       info: null
     }
   },
   mounted () {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
     axios
       .get('http://localhost:8000/Procede')
       .then(response => (this.info = response.data))
@@ -111,8 +117,8 @@ export default {
          axios
       .delete('http://localhost:8000/Procede/delete/'+x)
       .then(response => (
-       this.$router.push('../process'),
-      alert("Deleted")))
+       this.$router.go()	
+      ))
                 
    }
     },

@@ -44,6 +44,7 @@
 <script>
 import { Button, FormGroupInput } from "@/components";
 import { Axios } from "../axios";
+import router from "@/router";
 export default {
   name: "AddStep",
   bodyClass: "landing-page",
@@ -61,6 +62,12 @@ export default {
         errorD: "",
       },
     };
+  },
+   mounted() {
+    console.log(this.token);
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
   },
 
   methods: {

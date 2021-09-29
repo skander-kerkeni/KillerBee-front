@@ -68,6 +68,7 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
+import router from "@/router";
 import axios from 'axios';
 export default {
   name: 'Steps',
@@ -78,11 +79,15 @@ export default {
   },
   data () {
     return {
+      token: window.localStorage.getItem("user-token") ,
       info: null
     }
   },
-
+ 
   mounted () {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
     axios
       .get('http://localhost:8000/Etapes')
       .then(response => (this.info = response.data))

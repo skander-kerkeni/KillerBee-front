@@ -27,7 +27,7 @@
           <p class="text-danger" style="font-size: 13px">{{ form.errorD }}</p>
           <fg-input
             addon-left-icon="now-ui-icons text_caps-small"
-            placeholder="Dmlmlmon"
+            placeholder="Desc"
             v-model="form.desc"
           >
           </fg-input>
@@ -67,6 +67,7 @@ export default {
     return {
       id: this.$route.params.id,
       info: null,
+      token: window.localStorage.getItem("user-token") ,
       form: {
         name: null,
         desc: "",
@@ -78,7 +79,7 @@ export default {
     };
   },
   created() {
-    Axios.get("/Modele/" + this.id).then(
+    Axios.get("/Modele/" + this.id+"?api_token="+this.token).then(
       (response) => (
         (this.info = response.data),
         (this.form.name = this.info["Nom"]),
@@ -107,6 +108,7 @@ export default {
         this.form.errorD = "";
         this.form.errorG = "";
         Axios.put("/Modele/update/" + this.id, {
+          api_token: this.token,
           Nom: this.form.name,
           Description: this.form.desc,
           pUHT: this.form.puht,

@@ -76,8 +76,9 @@
 </template>
 <script>
 import { Button, FormGroupInput } from '@/components';
-
+import router from "@/router";
 import {Axios} from '../axios';
+
 export default {
   name: 'Models',
   bodyClass: 'landing-page',
@@ -87,13 +88,16 @@ export default {
   },
   data () {
     return {
+      token: window.localStorage.getItem("user-token") ,
       info: null
     }
   },
 
   mounted () {
+   
+console.log(this.token)
     Axios
-      .get('/Modele')
+      .get('/Modele?api_token='+this.token)
       .then(response => (this.info = response.data))
   },
   methods: {
@@ -101,11 +105,13 @@ export default {
     del(x) {
        if(confirm("Do you really want to delete?")){
          Axios
-      .delete('/Modele/delete/'+x)
+      .delete('/Modele/delete/'+x,
+      {data: {api_token: this.token}})
       .then(response => (
-      alert("Deleted")),
-       this.$router.push('../models'))
-                
+      
+      this.$router.go()	),
+       )
+       
    }
     },
   }

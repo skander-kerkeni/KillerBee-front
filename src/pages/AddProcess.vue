@@ -29,11 +29,11 @@
 
           <div class="col-6" style="margin-left: 24%">
             <p class="text-danger" style="font-size: 13px">{{ form.errorM }}</p>
+             
             <select class="form-control" v-model="form.model">
-              <option value="">Choose Your Model</option>
-              <option value="Model1">Model1</option>
-              <option value="Model2">Model2</option>
-              <option value="Model3">Model3</option>
+              <option  value="">Choose a model!</option>
+              <option  v-for="(item) in info" :key="item.id" v-bind:value="item['Nom']">{{item['Nom']}}</option>
+              
             </select>
           </div>
           <div style="margin-top: 2%"></div>
@@ -102,6 +102,8 @@ export default {
   },
   data() {
     return {
+     token: window.localStorage.getItem("user-token") ,
+      info: null,
       form: {
         name: "",
         desc: "",
@@ -111,6 +113,11 @@ export default {
         errorD: "",
       },
     };
+  },
+  mounted () {
+    Axios
+      .get('/Modele?api_token='+this.token)
+      .then(response => (this.info = response.data))
   },
 
   methods: {

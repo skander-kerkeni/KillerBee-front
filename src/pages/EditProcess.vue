@@ -89,8 +89,9 @@
 </template>
 <script>
 import { Button, FormGroupInput, Checkbox } from "@/components";
-//import axios from 'axios';
+
 import { Axios } from "../axios";
+import router from "@/router";
 
 export default {
   name: "EditProcess",
@@ -104,6 +105,7 @@ export default {
     return {
       id: this.$route.params.id,
       info: null,
+      token: window.localStorage.getItem("user-token") ,
       form: {
         name: "",
         desc: "",
@@ -115,6 +117,9 @@ export default {
     };
   },
   created() {
+    if (this.token == null) {
+      router.push({ name: "login" });
+    }
     Axios.get("/Procede/" + this.id).then(
       (response) => (
         (this.info = response.data),

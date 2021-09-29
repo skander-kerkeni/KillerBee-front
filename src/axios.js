@@ -9,7 +9,8 @@ export const Axios = axios.create({
  Axios.interceptors.request.use(
   async config => {
     config.headers = { 
-      'Authorization': `Bearer ${api_token}`, //Ici appelez le localStorage pour avoir le cookie
+      
+      'Authorization': `api_token ${api_token}`, //Ici appelez le localStorage pour avoir le cookie
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
@@ -23,7 +24,8 @@ Axios.interceptors.response.use((response) => {
   return response
 }, async function (error) {
 //  const originalRequest = error.config;
-  if (error.response.status === 403 || error.response.status ===401) {
+  if (error.response.status === 403 || error.response.status === 401 ) {
+    window.localStorage.removeItem("user-token"),
    router.push({name :'login'})
    
   }
