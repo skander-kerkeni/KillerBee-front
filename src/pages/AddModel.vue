@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     async submit() {
+      console.log("display form", this.form);
       if (
         !this.form.name ||
         !this.form.desc ||
@@ -99,10 +100,10 @@ export default {
       } else {
         Axios.post("/Modele/create", {
           api_token: this.token,
-          Nom: this.form.name,
-          Description: this.form.desc,
-          pUHT: this.form.puht,
-          Gamme: this.form.range,
+          module_nom: this.form.name,
+          module_description: this.form.desc,
+          module_pUHT: this.form.puht,
+          module_gamme: this.form.range,
         }).then(
           (response) => {
             this.$router.push("../models");

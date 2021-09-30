@@ -157,7 +157,7 @@ export default {
         Axios.put("/Procede/update/" + this.id, {
           pro_nom: this.form.name,
           pro_description: this.form.desc,
-          id_procede: this.form.model,
+          module_nom: this.form.model,
         }).then(
           (response) => {
             console.log(response);

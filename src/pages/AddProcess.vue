@@ -122,6 +122,7 @@ export default {
 
   methods: {
     async submit() {
+      console.log(this.form);
       if (!this.form.name || !this.form.desc) {
         this.form.errorD = "";
         this.form.errorM = "";
@@ -142,7 +143,7 @@ export default {
         Axios.post("/Procede/create", {
           pro_nom: this.form.name,
           pro_description: this.form.desc,
-          id_procede: this.form.model,
+          module_nom: this.form.model,
         }).then(
           (response) => {
             this.$router.push("../process");
