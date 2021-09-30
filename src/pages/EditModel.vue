@@ -82,10 +82,10 @@ export default {
     Axios.get("/Modele/" + this.id+"?api_token="+this.token).then(
       (response) => (
         (this.info = response.data),
-        (this.form.name = this.info["Nom"]),
-        (this.form.desc = this.info["Description"]),
-        (this.form.puht = this.info["pUHT"]),
-        (this.form.range = this.info["Gamme"])
+        (this.form.name = this.info["module_nom"]),
+        (this.form.desc = this.info["module_description"]),
+        (this.form.puht = this.info["module_pUHT"]),
+        (this.form.range = this.info["module_gamme"])
       )
     );
   },
@@ -109,10 +109,10 @@ export default {
         this.form.errorG = "";
         Axios.put("/Modele/update/" + this.id, {
           api_token: this.token,
-          Nom: this.form.name,
-          Description: this.form.desc,
-          pUHT: this.form.puht,
-          Gamme: this.form.range,
+          module_nom: this.form.name,
+          module_description: this.form.desc,
+          module_pUHT: this.form.puht,
+          module_gamme: this.form.range,
         }).then(
           (response) => {
             console.log(response);

@@ -29,11 +29,10 @@
 
           <div class="col-6" style="margin-left: 24%">
             <p class="text-danger" style="font-size: 13px">{{ form.errorM }}</p>
-            <select class="form-control" v-model="form.model">
-              <option value="">{{ info["id_procede"] + "*" }}</option>
-              <option value="Model1">Model1</option>
-              <option value="Model2">Model2</option>
-              <option value="Model3">Model3</option>
+        <select class="form-control" v-model="form.model">
+              <option  value="">Choose a model!</option>
+              <option  v-for="(item) in info" :key="item.id" v-bind:value="item['module_nom']">{{item['module_nom']}}</option>
+              
             </select>
           </div>
           <div style="margin-top: 2%"></div>
@@ -103,7 +102,7 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params.id,
+      id: parseInt(this.$route.params.id),
       info: null,
       token: window.localStorage.getItem("user-token") ,
       form: {
@@ -122,11 +121,18 @@ export default {
     }
     Axios.get("/Procede/" + this.id).then(
       (response) => (
+        console.log(this.$route.params.id),
         (this.info = response.data),
         (this.form.name = this.info["pro_nom"]),
         (this.form.desc = this.info["pro_description"])
       )
     );
+  },
+
+  mounted () {
+    Axios
+      .get('/Modele?api_token='+this.token)
+      .then(response => (this.info = response.data))
   },
 
   methods: {

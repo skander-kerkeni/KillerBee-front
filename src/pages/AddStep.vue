@@ -63,12 +63,7 @@ export default {
       },
     };
   },
-   mounted() {
-    console.log(this.token);
-    if (this.token == null) {
-      router.push({ name: "login" });
-    }
-  },
+  
 
   methods: {
     async submit() {
@@ -82,9 +77,10 @@ export default {
       } else {
         this.form.errorG = "";
         this.form.errorD = "";
+        console.log(this.form.desc)
         Axios.post("/Etapes/create", {
-          etape_nom: this.form.name,
-          etape_description: this.form.desc,
+          etap_nom: this.form.name,
+          etap_description: this.form.desc,
         }).then(
           (response) => {
             this.$router.push("../steps");

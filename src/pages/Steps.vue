@@ -99,9 +99,7 @@ export default {
          axios
       .delete('http://localhost:8000/Etapes/delete/'+x)
       .then(response => (
-       this.$router.push('../steps'),
-      alert("Deleted")))
-                
+       this.$router.go()))               
    }
     },
   }

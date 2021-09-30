@@ -92,7 +92,6 @@ export default {
     Axios
       .get('/Ingredient')
       .then(response => (
-        console.log(response.data),
         this.info = response.data))
   },
   methods: {

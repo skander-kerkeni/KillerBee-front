@@ -32,7 +32,7 @@
              
             <select class="form-control" v-model="form.model">
               <option  value="">Choose a model!</option>
-              <option  v-for="(item) in info" :key="item.id" v-bind:value="item['Nom']">{{item['Nom']}}</option>
+              <option  v-for="(item) in info" :key="item.id" v-bind:value="item['module_nom']">{{item['module_nom']}}</option>
               
             </select>
           </div>

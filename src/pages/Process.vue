@@ -46,7 +46,7 @@
     <tr v-for="(item,index) in info" :key="item.id">
       <th scope="row">{{index}}</th>
       <td>{{item['pro_nom']}}</td>
-       <td>{{item['id_procede']}}</td>
+       <td>{{item['module_name']}}</td>
       <td>{{item['pro_description']}}</td>
      <td>Step1 , Step5 , Step6</td>
       <td>Validated</td>

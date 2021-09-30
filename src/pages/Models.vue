@@ -46,10 +46,10 @@
     <tr v-for="(item,index) in info" :key="item.id">
          
       <th scope="row">{{index}}</th>
-      <td>{{item['Nom']}}</td>
-      <td>{{item['Description']}}</td>
-      <td>{{item['pUHT']}}</td>
-      <td>{{item['Gamme']}}</td>
+      <td>{{item['module_nom']}}</td>
+      <td>{{item['module_description']}}</td>
+      <td>{{item['module_pUHT']}}</td>
+      <td>{{item['module_gamme']}}</td>
       <td>
         <router-link v-bind:to="'/editModel/'+item['id']"  >
            <n-button   type="warning" link>EDIT</n-button>
@@ -98,7 +98,10 @@ export default {
 console.log(this.token)
     Axios
       .get('/Modele?api_token='+this.token)
-      .then(response => (this.info = response.data))
+      .then(response => (
+        console.log(response.data ),
+        this.info = response.data
+        ))
   },
   methods: {
     
